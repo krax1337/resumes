@@ -9,8 +9,8 @@ def home(request):
 
 def upload(request):
     if request.method == 'POST':
-        handle_uploaded_file(request.FILES['file'], str(request.FILES['file']))
-        return HttpResponse("Successful")
+        res= handle_uploaded_file(request.FILES['file'], str(request.FILES['file']))
+        return render(request, 'success.htm', {'value': res })
 
     return HttpResponse("Failed")
 
@@ -27,3 +27,4 @@ def handle_uploaded_file(file, filename):
     print(results)
     if os.path.exists('upload/'):
         shutil.rmtree('upload/')
+    return results
