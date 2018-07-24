@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 import shutil
-from .hh_miner_ru import pdf_to_text
+from .pdf import pdf_to_text
 # Create your views here.
 def home(request):
     return render(request, 'index.htm', {'what':'Django File Upload'})
