@@ -2,10 +2,6 @@ import json
 import requests
 import unicodedata
 import operator
-
-#!/usr/bin/python
-
-# Screen Scraper for Subs
 import urllib
 import urllib.request
 from xml.etree import ElementTree as ET
@@ -14,6 +10,14 @@ from nltk.tokenize import word_tokenize
 import string
 from lxml import etree
 import html
+import os
+import shutil
+from io import StringIO
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
+
 
 requestURL="https://www.enbek.kz/ru/xml/jooble"
 
@@ -141,13 +145,14 @@ def pdf_to_text(fname, pages=None):
 
     # print (cv_summary)
 
-    f.close()
-
+    
+    
 
 
     recomend = {}
 
     max = 0
+
 
     for key in jobs:
         for word in jobs[key]:
@@ -159,7 +164,12 @@ def pdf_to_text(fname, pages=None):
                         else:
                             recomend[key] += 1
 
+
+    vacants = {}
+
     for key_1 in recomend:
-            print(jobs[key_1])
+        vacants[key_1] = jobs[key_1]
+
+    return vacants
 
     # sorted(recomend.items(), key=lambda x: x[1])
