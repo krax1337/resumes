@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Django File Upload</title>
+<style>
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #777777;
+    text-align: center
+  }
+  table {
+    margin: auto;
+  }
+</style>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+     rel="stylesheet">
+   
+</head>
+
+<body>
+
+<h1>
+    {{what}}
+</h1>
+<table>
+  <tr>
+
+    <td>
+      <img src="http://www.graphicssimplified.com/wp-content/uploads/2015/04/upload-cloud.png
+http://www.graphicssimplified.com/wp-content/uploads/2015/04/upload-cloud.png
+" alt="Smiley face" height="60" width="80">
+      <form action="{{ request.build_absolute_uri }}upload/" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <input  class="btn btn-default btn-file" name="file"  type="file" hidden/>
+        <br />
+        <input  class='btn btn-primary'  type="submit" value="Upload File" />
+      </form>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
