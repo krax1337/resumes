@@ -26,9 +26,7 @@
   <tr>
 
     <td>
-      <img src="http://www.graphicssimplified.com/wp-content/uploads/2015/04/upload-cloud.png
-http://www.graphicssimplified.com/wp-content/uploads/2015/04/upload-cloud.png
-" alt="Smiley face" height="60" width="80">
+      
       <form action="{{ request.build_absolute_uri }}upload/" method="POST" enctype="multipart/form-data" >
         {% csrf_token %}
         <input  class="btn btn-default btn-file" name="file"  type="file" hidden/>
