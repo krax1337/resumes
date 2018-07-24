@@ -24,7 +24,7 @@ cloudpickle==0.5.3
 clyent==1.2.1
 colorama==0.3.9
 comtypes==1.1.4
-conda==4.5.8
+conda==4.3.16
 conda-build==3.10.5
 conda-verify==2.0.0
 contextlib2==0.5.5
