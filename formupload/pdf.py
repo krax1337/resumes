@@ -7,7 +7,6 @@ import urllib.request
 from xml.etree import ElementTree as ET
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import nltk
 import string
 from lxml import etree
 import html
@@ -18,10 +17,6 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
-
-nltk.download('stopwords')
-nltk.download('punkt')
-
 
 requestURL="https://www.enbek.kz/ru/xml/jooble"
 
