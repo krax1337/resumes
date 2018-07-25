@@ -28,15 +28,26 @@
     
     
     <div class="container">
-        
-        {%  for vacant in vacants%}
-            <div>{{vacant}}</div>
-            {{  counter.increment }}
-            {%if  counter.break%}
-                </br>
-            {%endif%}
 
-        {% endfor %}
+
+            <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        
+
+                      </tr>
+                    </thead>
+                    {% for vacant in vacants %}
+                    <tbody>
+                    
+                        
+                          <td>{{ vacant }}</td>
+
+                     
+                    </tbody>
+                    {% endfor %}
+                   </table>
+
 
     </div>
     

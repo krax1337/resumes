@@ -26,13 +26,15 @@ def upload(request):
         for job in root.iter('job'):
             for key in vacants_ids:
                 if(job.attrib.get('id') == key):
-                    all_vacants_info.append("Название: "+str(job.find('name').text))
+                    all_vacants_info.append("Название: "+str(job.find('name').text).replace(", ", ""))
                     all_vacants_info.append("Регион: "+str(job.find('region').text))
                     all_vacants_info.append("Зарплата: "+str(job.find('salary').text))
-                    all_vacants_info.append("Описание: "+str(job.find('description').text))
+                    all_vacants_info.append("Описание: "+str(job.find('description').text).replace("p&gt;", "").replace("li", "").replace("ul", "").replace("/", "").replace("&gt;", "").replace("&lt;", "").replace("ul&gt;", "").replace("/li&gt;", "").replace("li&gt;", "").replace("-&amp;", "").replace("nbsp;", "").replace("&amp;", ""))
                     all_vacants_info.append("Почта: "+str(job.find('email').text))
                     all_vacants_info.append("Телефон: "+str(job.find('phone').text))
                     all_vacants_info.append("Ссылка: "+str(job.find('link').text))
+                    all_vacants_info.append(" ")
+
     
     return render(request, 'success.htm', {'vacants':all_vacants_info})
 
