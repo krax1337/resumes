@@ -7,7 +7,7 @@ import urllib.request
 from xml.etree import ElementTree as ET
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import ntlk
+import nltk
 import string
 from lxml import etree
 import html
