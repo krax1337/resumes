@@ -19,7 +19,7 @@ root = ET.parse(urllib.request.urlopen(requestURL)).getroot()
 
 def stop_words_kk():        
     stop_words_kk=[]
-    with open('C:/Users/izat0/Desktop/method/resumes/formupload/stop.txt') as f:
+    with open('./stop.txt') as f:
         lines = f.readlines()
         stop_words_kk.append(lines[0])
     return stop_words_kk
