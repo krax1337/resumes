@@ -7,8 +7,7 @@ import urllib.request
 from xml.etree import ElementTree as ET
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import string
-from lxml import etree
+import string 
 import html
 import os
 import shutil
@@ -27,7 +26,7 @@ root = ET.parse(urllib.request.urlopen(requestURL)).getroot()
 
 def stop_words_kk():        
     stop_words_kk=[]
-    with open('C:/Users/root/Desktop/python pdf converter/stop.txt') as f:
+    with open('C:/Users/izat0/Desktop/method/resumes/formupload/stop.txt') as f:
         lines = f.readlines()
         stop_words_kk.append(lines[0].encode('utf-8'))
     return stop_words_kk
