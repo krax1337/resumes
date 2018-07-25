@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 import shutil
-from .pdf import pdf_to_text
+from .vacants import get_vacants
 # Create your views here.
 
 
@@ -28,8 +28,7 @@ def handle_uploaded_file(file, filename):
             destination.write(chunk)
     dir_path = 'upload/' + filename
     results = []
-    results = pdf_to_text(dir_path)
-    print(results)
+    results = get_vacants(dir_path)
     if os.path.exists('upload/'):
         shutil.rmtree('upload/')
     return results

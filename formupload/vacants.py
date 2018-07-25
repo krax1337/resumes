@@ -10,13 +10,7 @@ from nltk.tokenize import word_tokenize
 import string 
 import html
 import os
-import shutil
-from io import StringIO
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.pdfpage import PDFPage
-
+from .io_utils import read_pdf_and_docx
 requestURL="https://www.enbek.kz/ru/xml/jooble"
 
 
@@ -58,30 +52,8 @@ for job in root.iter('job'):
     jobs[job_id]= names
     
 
-def pdf_to_text(fname, pages=None):
-    if not pages:
-        pagenums = set()
-    else:
-        pagenums = set(pages)
-
-    output = StringIO()
-    manager = PDFResourceManager()
-    converter = TextConverter(manager, output, laparams=LAParams())
-    interpreter = PDFPageInterpreter(manager, converter)
-
-    infile = open(fname, 'rb')
-    for page in PDFPage.get_pages(infile, pagenums):
-        interpreter.process_page(page)
-    infile.close()
-    converter.close()
-    text = output.getvalue()
-    output.close()
-    result = []
-    for line in text.split('\n'):
-        line2 = line.strip()
-        if line2 != '':
-            result.append(line2)
-    l = result
+def get_vacants(fname, pages=None):
+    l = read_pdf_and_docx(fname)
     cv_summary = {}
     
     counter = -1
@@ -138,15 +110,12 @@ def pdf_to_text(fname, pages=None):
 
         cv_summary[key] = [a for a in cv_summary[key] if not a in stop_words and  not a in string.punctuation]
         cv_summary[key] = [ab for ab in cv_summary[key] if not ab in stop_words_k and  not ab in numbers]
-
-    cv_summary["position"] = [x for x in cv_summary["position"]  if x != "•"]
-
-    # print (cv_summary)
-
-    
+    if 'position' in cv_summary:
+        key_pos = [x for x in cv_summary["position"]  if x != "•"]
+        cv_summary['position'] = key_pos
     
 
-
+    print(cv_summary)
     recomend = {}
 
     max = 0
