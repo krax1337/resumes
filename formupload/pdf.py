@@ -17,6 +17,9 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 
+nltk.download('stopwords')
+nltk.download('punkt')
+
 
 requestURL="https://www.enbek.kz/ru/xml/jooble"
 
@@ -28,7 +31,7 @@ def stop_words_kk():
     stop_words_kk=[]
     with open('C:/Users/izat0/Desktop/method/resumes/formupload/stop.txt') as f:
         lines = f.readlines()
-        stop_words_kk.append(lines[0].encode('utf-8'))
+        stop_words_kk.append(lines[0])
     return stop_words_kk
 
 
