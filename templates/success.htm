@@ -1,9 +1,47 @@
-<h1>Подходящие вакансии</h1>
+<html>
+<head>
+<title>
+   
+</title>
+<style>
+ .alert alert-success {
+   padding: 100px;
+   margin: 100px;
+ }
+ 
+</style>
 
-<!-- {{vacants}} -->
 
-{%  for vacant in vacants%}
-    {{vacant}}
-    </br>
 
-{% endfor %}
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+    rel="stylesheet">
+</head>
+
+<body>
+    <div class="alert alert-success" role="alert" style="width:500px margin: 0 auto;">
+    
+    <div class="container">
+    <h4 class="alert-heading"> <font size="5" color="blue" face="Comic Sans MS">Подходящие вакансии</font></h4>
+    </div>
+    </div>
+
+    
+    
+    <div class="container">
+        
+        {%  for vacant in vacants%}
+            <div>{{vacant}}</div>
+            {{  counter.increment }}
+            {%if  counter.break%}
+                </br>
+            {%endif%}
+
+        {% endfor %}
+
+    </div>
+    
+
+    </div>
+</body>
+
+</html>

@@ -35,10 +35,12 @@ stop_words_k=stop_words_kk()
 
 punctuations = ['(', ')' ,'—' ,';',':','[',']',',','»', '«', 'Январь','Февраль',
                  'Март','Апрель', 'Май', 'Июнь', 'Июль',
-                 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', '1','2','3','4','5','6','7','8','9','года','месяцев','мастер','of']
+                 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', '1','2','3','4','5','6','7','8','9','года','месяцев','мастер','of','p',
+                 '/p','lt','li','/li','gt','/ul','amp','nbsp','ul','/strong']
 numbers = ['(', ')' ,'—' ,';',':','[',']',',','»', '«', 'Январь','Февраль',
                  'Март','Апрель', 'Май', 'Июнь', 'Июль',
-                 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', '1','2','3','4','5','6','7','8','9','года', 'месяцев','мастер','of']
+                 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', '1','2','3','4','5','6','7','8','9','года','месяцев','мастер','of','p',
+                 '/p','lt','li','/li','gt','/ul','amp','nbsp','ul','/strong']
 jobs=dict()
 
 
@@ -50,6 +52,12 @@ for job in root.iter('job'):
     names = [wor for wor in names if not wor in stop_words and  not wor in string.punctuation]
     names = [word for word in names if not word in stop_words_k and  not word in numbers]
     jobs[job_id]= names
+    description=job.find('description').text
+    if(description != None):
+        descriptions=word_tokenize(description)
+        descriptions = [wor for wor in descriptions if not wor in stop_words and  not wor in string.punctuation]
+        descriptions = [word for word in descriptions if not word in stop_words_k and  not word in numbers]
+        jobs[job_id].extend(descriptions)
     
 
 def get_vacants(fname, pages=None):
