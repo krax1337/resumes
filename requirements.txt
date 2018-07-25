@@ -6,3 +6,4 @@ gunicorn==19.9.0
 requests==2.19.1
 nltk==3.3
 django-bootstrap3==10.0.1
+python-docx==0.8.6
