@@ -106,3 +106,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
+
+
+BOOTSTRAP3 = {
+    'include_jquery': True,
+    }
