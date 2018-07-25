@@ -17,10 +17,6 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 
-nltk.download('stopwords')
-nltk.download('punkt')
-
-
 requestURL="https://www.enbek.kz/ru/xml/jooble"
 
 
