@@ -4,6 +4,11 @@ import os
 import shutil
 from .pdf import pdf_to_text
 # Create your views here.
+
+
+
+
+
 def home(request):
     return render(request, 'index.htm', {'what':'Django File Upload'})
 
