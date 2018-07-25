@@ -4,3 +4,4 @@ lxml==4.2.3
 pdfminer2
 gunicorn==19.9.0
 requests==2.19.1
+nltk==3.3
