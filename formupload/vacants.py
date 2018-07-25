@@ -137,6 +137,6 @@ def get_vacants(fname, pages=None):
     for key_1 in recomend:
         vacants[key_1] = jobs[key_1]
 
-    return vacants
+    return jobs, vacants.keys()
 
     # sorted(recomend.items(), key=lambda x: x[1])
