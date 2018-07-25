@@ -7,6 +7,7 @@ import urllib.request
 from xml.etree import ElementTree as ET
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import nltk
 import string
 from lxml import etree
 import html
@@ -18,6 +19,9 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 
+nltk.download('stopwords')
+nltk.download('punkt')
+
 
 requestURL="https://www.enbek.kz/ru/xml/jooble"
 
@@ -27,9 +31,9 @@ root = ET.parse(urllib.request.urlopen(requestURL)).getroot()
 
 def stop_words_kk():        
     stop_words_kk=[]
-    with open('C:/Users/root/Desktop/python pdf converter/stop.txt') as f:
+    with open('./stop.txt','rb') as f:
         lines = f.readlines()
-        stop_words_kk.append(lines[0].encode('utf-8'))
+        stop_words_kk.append(lines[0])
     return stop_words_kk
 
 
