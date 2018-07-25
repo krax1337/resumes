@@ -1,7 +1,7 @@
 formupload/__pycache__
 simpleform/__pycache__
 vscode/
-
+__pycache__/
 # Compiled source #
 ###################
 *.com
