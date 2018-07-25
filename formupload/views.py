@@ -13,7 +13,7 @@ from .vacants import get_vacants
 
 
 def home(request):
-    return render(request, 'index.htm', {'what':'Django File Upload'})
+    return render(request, 'index.htm', {'what':'Upload your CV'})
 
 def upload(request):
     requestURL="https://www.enbek.kz/ru/xml/jooble"
