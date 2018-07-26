@@ -1,3 +1,4 @@
+{% load bootstrap3 %}
 <html>
 <head>
 <title>
@@ -13,8 +14,11 @@
 
 
 
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+<link href="http://netdna.bootsthapcdn.com/bootsthap/3.0.3/css/bootsthap.min.css"
     rel="stylesheet">
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 
 <body>
@@ -32,17 +36,27 @@
 
             <table class="table table-bordered">
                     <thead>
-                      <tr>
-                        
+                        <tr>
+                        <th>
+                            Название работы  
+                            </th>
+                            <th>Регион</th>
+                            <th>Зарплата</th>
+                            <th>Описание работы</th>
+                            <th>Email</th>
+                            <th>Телефон</th>
+                            <th>Ссылка</th>
+                            </tr>
 
-                      </tr>
+
                     </thead>
                     {% for vacant in vacants %}
                     <tbody>
-                    
-                        
-                          <td>{{ vacant }}</td>
-
+                      
+                          {%for key,value in vacant.items%}
+                          
+                          <td>{{ value }}</td>
+                          {%endfor%}
                      
                     </tbody>
                     {% endfor %}
