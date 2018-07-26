@@ -114,7 +114,6 @@ def get_vacants(fname, pages=None):
         
     for key in cv_summary:
         cv_summary[key] = cv_summary[key].replace('.', '').replace(',', '').split()
-        #cv_summary[key] = cv_summary[key].replace(',', '').split()
 
         cv_summary[key] = [a for a in cv_summary[key] if not a in stop_words and  not a in string.punctuation]
         cv_summary[key] = [ab for ab in cv_summary[key] if not ab in stop_words_k and  not ab in numbers]
@@ -122,12 +121,7 @@ def get_vacants(fname, pages=None):
         key_pos = [x for x in cv_summary["position"]  if x != "•"]
         cv_summary['position'] = key_pos
     
-
-    print(cv_summary)
     recomend = {}
-
-    max = 0
-
 
     for key in jobs:
         for word in jobs[key]:
@@ -139,12 +133,17 @@ def get_vacants(fname, pages=None):
                         else:
                             recomend[key] += 1
 
+    recomend_sorted_list = sorted(recomend.items(), key=lambda x: x[1],reverse=True)
 
-    vacants = {}
+    recomend_sorted_dict = dict(recomend_sorted_list)
 
-    for key_1 in recomend:
-        vacants[key_1] = jobs[key_1]
+    print(recomend_sorted_dict)
 
-    return jobs, vacants.keys()
+    # vacants = {}
+
+    # for key_1 in recomend_sorted_dict:
+    #     vacants[key_1] = jobs[key_1]
+
+    return recomend_sorted_dict.keys(),cv_summary
 
     # sorted(recomend.items(), key=lambda x: x[1])
