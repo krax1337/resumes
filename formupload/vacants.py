@@ -196,7 +196,18 @@ def get_vacants(fname, pages=None):
 
     recomend_sorted_dict = dict(recomend_sorted_list)
 
-    print(recomend_sorted_dict)
+    # print(recomend_sorted_dict)
 
-    return recomend_sorted_dict.keys(),cv_summary
+    res_dict = {}
+
+    counter = -1
+    for key in recomend_sorted_dict:
+        counter += 1
+        if(counter > 20):
+            break
+        else:
+            res_dict[key] = recomend_sorted_dict[key]
+            
+
+    return res_dict.keys(),cv_summary
 
