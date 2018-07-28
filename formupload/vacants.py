@@ -4,15 +4,15 @@ import unicodedata
 import operator
 import urllib
 import urllib.request
-from xml.etree import ElementTree as ET
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 import string 
 import html
 import os
+from xml.etree import ElementTree as ET
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 from .io_utils import read_pdf_and_docx
-requestURL="https://www.enbek.kz/ru/xml/jooble"
 
+requestURL="https://www.enbek.kz/ru/xml/jooble"
 
 name=""
 root = ET.parse(urllib.request.urlopen(requestURL)).getroot()
@@ -24,34 +24,36 @@ def stop_words_kk():
         stop_words_kk.append(lines[0])
     return stop_words_kk
 
-
-
-
 stop_words = stopwords.words('russian')
+stop_words_k=stop_words_kk()
 for word in stopwords.words('russian'):
     stop_words.append(word.upper())
-stop_words_k=stop_words_kk()
+
 
 
 punctuations = ['(', ')' ,'—' ,';',':','[',']',',','»', '«', 'Январь','Февраль',
                  'Март','Апрель', 'Май', 'Июнь', 'Июль',
                  'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', '1','2','3','4','5','6','7','8','9','года','месяцев','мастер','of','p',
                  '/p','lt','li','/li','gt','/ul','amp','nbsp','ul','/strong']
+
 numbers = ['(', ')' ,'—' ,';',':','[',']',',','»', '«', 'Январь','Февраль',
                  'Март','Апрель', 'Май', 'Июнь', 'Июль',
                  'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', '1','2','3','4','5','6','7','8','9','года','месяцев','мастер','of','p',
                  '/p','lt','li','/li','gt','/ul','amp','nbsp','ul','/strong']
+
 jobs=dict()
 
 
 
 for job in root.iter('job'):
     job_id = job.attrib.get('id')    
+    
     name=job.find('name').text
     names=word_tokenize(name)
     names = [wor for wor in names if not wor in stop_words and  not wor in string.punctuation]
     names = [word for word in names if not word in stop_words_k and  not word in numbers]
     jobs[job_id]= names
+    
     description=job.find('description').text
     if(description != None):
         descriptions=word_tokenize(description)
@@ -130,7 +132,9 @@ def get_vacants(fname, pages=None):
         if 'position' in cv_summary:
             key_pos = [x for x in cv_summary["position"]  if x != "•"]
             cv_summary['position'] = key_pos
+    
     else:
+        
         key_words = {
         "education": ["Образование:", "Квалификация", "квалификация", "Квалификации", "квалификации",
         "Курсы", "курсы", ], 
@@ -140,7 +144,6 @@ def get_vacants(fname, pages=None):
         "experince": [ "Опыт работы:"],
         "language" : ["Языки", "языки", "языков", "язык"]
         } 
-    
     
         cv_summary = {"education": "", "position": "", 
         "skills": "", "experince": "", "language": ""}
@@ -169,6 +172,7 @@ def get_vacants(fname, pages=None):
                                     if word_1 in l[counter_2]:
                                         check = False
                                         counter_2 = 0
+        
         for key in cv_summary:
             cv_summary[key] = cv_summary[key].replace('.', ' ').replace(',', ' ').split()
 
@@ -178,25 +182,22 @@ def get_vacants(fname, pages=None):
     
     print(cv_summary)
 
-    
-
     recomend = {}
 
     for key in jobs:
         for word in jobs[key]:
             for key_1 in cv_summary:
-                for word_1 in cv_summary[key_1]:
-                    if(word == word_1):
-                        if key not in recomend.keys():
-                            recomend[key] = 1
-                        else:
-                            recomend[key] += 1
+                if(key_1 == "position" or key_1 == "skills"):
+                    for word_1 in cv_summary[key_1]:
+                        if(word == word_1):
+                            if key not in recomend.keys():
+                                recomend[key] = 1
+                            else:
+                                recomend[key] += 1
 
     recomend_sorted_list = sorted(recomend.items(), key=lambda x: x[1],reverse=True)
 
     recomend_sorted_dict = dict(recomend_sorted_list)
-
-    # print(recomend_sorted_dict)
 
     res_dict = {}
 
@@ -208,6 +209,7 @@ def get_vacants(fname, pages=None):
         else:
             res_dict[key] = recomend_sorted_dict[key]
             
+    print(res_dict)
 
     return res_dict.keys(),cv_summary
 

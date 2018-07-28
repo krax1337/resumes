@@ -17,10 +17,6 @@ def show(request):
         summary="HEER"
         return render(request, 'show.html', {'summary':"бЛА БЛА БЛА"})
 
-
-
-
-
 def upload(request):
     requestURL="https://www.enbek.kz/ru/xml/jooble"
     root = ET.parse(urllib.request.urlopen(requestURL)).getroot()
@@ -56,8 +52,8 @@ def upload(request):
                
         return render(request, 'success.html', {'vacants':all_vacants_info, 'cv_summary':cv_summary})
     else:
-        cv_summary=request.POST.get("cv_summary", cv_summary)
-        return render(request, 'show.html', {'cv_summary':cv_summary})
+        # cv_summary=request.POST.get("cv_summary", cv_summary)
+        return render(request, 'show.html')
 
 def handle_uploaded_file(file, filename):
     if not os.path.exists('upload/'):
