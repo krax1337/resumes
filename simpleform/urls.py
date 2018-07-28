@@ -21,4 +21,5 @@ from formupload import views
 urlpatterns = [
     url(r'^$', views.home, name="home"),
     url(r'^upload/', views.upload, name="upload"),
+    url(r'^show/', views.show, name="show"),
 ]

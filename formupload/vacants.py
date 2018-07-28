@@ -63,64 +63,104 @@ for job in root.iter('job'):
 def get_vacants(fname, pages=None):
     l = read_pdf_and_docx(fname)
     cv_summary = {}
-    
-    counter = -1
-    for line in l:
-        counter+= 1
-        
-        if "Желаемая должность и зарплата" in line:
-            cv_summary["position"] = l[counter+1]
-            counter_l = counter + 3
-            
-            while("•" in l[counter_l]):
-                cv_summary["position"] += " " + l[counter_l]
-                counter_l += 1
-        
-        if "Навыки" in line:
-            cv_summary["skills"] = l[counter+1]
-            counter_l = counter+2
-            
-            while True:
-                cv_summary["skills"] += " " + l[counter_l]
-                counter_l += 1
-                if("Опыт вождения" or "Дополнительная информация" in l[counter_l]):
-                    break
-        
-        # if "Образование" in line:
-        #     cv_summary["education"] = l[counter+1]
-        #     counter_l = counter+2
-            
-        #     while True:
-        #         if("Резюме обновлено" not in l[counter_l]):
-        #             if("Ключевые навыки" in l[counter_l]):
-        #                 break
-        #             cv_summary["education"] += " " + l[counter_l]
-                
-        #         counter_l += 1
-        
-        # if "Опыт работы" in line:
-        #     cv_summary["work"] = l[counter+1]
-        #     counter_l = counter+2
-            
-        #     while True:
-        #         if("Резюме обновлено" not in l[counter_l]):
-        #             if("Образование" in l[counter_l]):
-        #                 break
-        #             cv_summary["work"] += " " + l[counter_l]
-                
-        #         counter_l += 1  
-                
 
+    if "Резюме обновлено" in l:
+        counter = -1
+        for line in l:
+            counter+= 1
+            
+            if "Желаемая должность и зарплата" in line:
+                cv_summary["position"] = l[counter+1]
+                counter_l = counter + 3
+                
+                while("•" in l[counter_l]):
+                    cv_summary["position"] += " " + l[counter_l]
+                    counter_l += 1
+            
+            if "Навыки" in line:
+                cv_summary["skills"] = l[counter+1]
+                counter_l = counter+2
+                
+                while True:
+                    cv_summary["skills"] += " " + l[counter_l]
+                    counter_l += 1
+                    if("Опыт вождения" or "Дополнительная информация" in l[counter_l]):
+                        break
+            
+            if "Образование" in line:
+                cv_summary["education"] = l[counter+1]
+                counter_l = counter+2
+                
+                while True:
+                    if("Резюме обновлено" not in l[counter_l]):
+                        if("Ключевые навыки" in l[counter_l]):
+                            break
+                        cv_summary["education"] += " " + l[counter_l]
+                    
+                    counter_l += 1
+            
+            if "Опыт работы" in line:
+                cv_summary["experince"] = l[counter+1]
+                counter_l = counter+2
+                
+                while True:
+                    if("Резюме обновлено" not in l[counter_l]):
+                        if("Образование" in l[counter_l]):
+                            break
+                        cv_summary["experince"] += " " + l[counter_l]
+                    
+                    counter_l += 1  
         
+        if 'position' in cv_summary:
+            key_pos = [x for x in cv_summary["position"]  if x != "•"]
+            cv_summary['position'] = key_pos
+    else:
+        key_words = {
+        "education": ["Образование:", "Квалификация", "квалификация", "Квалификации", "квалификации",
+        "Курсы", "курсы", ], 
+        "position": ["Специальность", "с    пециальность","цель", "Цель"], 
+        "skills": [ "навыки", "Навыки", "Дополнительна информация", "дополнительна информация",
+        "Компьютерная грамотность","компьютерная грамотность", "качества", "Качества" ], 
+        "experince": [ "Опыт работы:"],
+        "language" : ["Языки", "языки", "языков", "язык"]
+        } 
+    
+    
+        cv_summary = {"education": "", "position": "", 
+        "skills": "", "experince": "", "language": ""}
+    
+        counter_l = -1
+        for line in l:
+            counter_l += 1
+            for key in key_words:
+                for word in key_words[key]:
+                    if word in line: 
+                        check = True
+                        counter_2 = counter_l+1
+                        while(check):
+                            if(counter_2 >= len(l)-1):
+                                check = False
+                                counter_2 = 0
+                                break
+                            else:
+                                cv_summary[key] += " " + l[counter_2]
+                                counter_2 += 1
+                            
+
+                            
+                            for key_1 in key_words:
+                                for word_1 in key_words[key_1]:
+                                    if word_1 in l[counter_2]:
+                                        check = False
+                                        counter_2 = 0
+    
+    
     for key in cv_summary:
         cv_summary[key] = cv_summary[key].replace('.', '').replace(',', '').split()
 
         cv_summary[key] = [a for a in cv_summary[key] if not a in stop_words and  not a in string.punctuation]
         cv_summary[key] = [ab for ab in cv_summary[key] if not ab in stop_words_k and  not ab in numbers]
-    if 'position' in cv_summary:
-        key_pos = [x for x in cv_summary["position"]  if x != "•"]
-        cv_summary['position'] = key_pos
-    
+
     recomend = {}
 
     for key in jobs:

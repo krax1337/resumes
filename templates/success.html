@@ -1,0 +1,91 @@
+{% load bootstrap3 %}
+
+<html>
+    
+    <head>
+        <title>Vacancies</title>
+        <style>
+        
+        #header{
+            color:#ffff; font-size:23px;
+            background-color: #9DD2E9;
+            padding: 2%;
+
+            text-align: center;
+            
+
+
+
+        }
+        #success_body{
+            padding:5px;
+        }
+        table {
+            font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        
+        </style>
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+    </head>
+
+    <body id="success_body">
+        
+        <div  class="container-fluid header">
+        
+        <header id="header"> Подходящие вакансии </header>
+            
+        <br>
+        
+        <form action="{{ request.build_absolute_uri }}show/" method="GET">
+                {% csrf_token %}
+                <input type="hidden" name="cv_summary" value="{{ cv_summary }}">
+                <input  class='btn btn-default'  type="submit" value="JSON file" />
+                <br/>
+            
+        </form>
+
+
+        <div class="table-wrapper">
+            <table class="table table-bordered">
+                <thead class="">
+                    <tr>
+                        <th>Название работы </th>
+                        <th>Регион</th>
+                        <th>Зарплата</th>
+                        <th>Описание работы</th>
+                        <th>Email</th>
+                        <th>Телефон</th>
+                        <th>Ссылка</th>
+                    </tr>
+                </thead>
+                
+                {% for vacant in vacants %}
+                    <tbody>
+                    
+                        {%for key,value in vacant.items%}
+                        
+                        <td>{{ value }}</td>
+                        
+                        {%endfor%}
+                    
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+
+
+
+    
+    </body>
+
+</html>
