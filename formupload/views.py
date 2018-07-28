@@ -47,7 +47,7 @@ def upload(request):
                         .replace("-&amp;", " ").replace("nbsp;", " ")
                         .replace("&amp;", " ").replace("quot;"," ")
                         .replace("br"," ").replace("strong"," ")
-                        .replace("strong"," ").replace("ol"," ")
+                        .replace("strong"," ").replace("ol"," "),
                         "job_email": str(job.find('email').text),
                         "job_phone": str(job.find('phone').text),
                         "job_link": str(job.find('link').text),
