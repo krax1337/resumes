@@ -62,17 +62,27 @@ for job in root.iter('job'):
 
 def get_vacants(fname, pages=None):
     l = read_pdf_and_docx(fname)
-    cv_summary = {}
 
-    if "Резюме обновлено" in l:
+    head_hunter = False
+    
+    for line in l:
+        if "Резюме обновлено" in line:
+            head_hunter = True
+            break
+
+
+
+    if(head_hunter):
+        cv_summary = {}
         counter = -1
         for line in l:
             counter+= 1
             
             if "Желаемая должность и зарплата" in line:
                 cv_summary["position"] = l[counter+1]
+                cv_summary["position"] += " " + l[counter+2]
                 counter_l = counter + 3
-                
+                    
                 while("•" in l[counter_l]):
                     cv_summary["position"] += " " + l[counter_l]
                     counter_l += 1
@@ -111,6 +121,12 @@ def get_vacants(fname, pages=None):
                     
                     counter_l += 1  
         
+        for key in cv_summary:
+            cv_summary[key] = cv_summary[key].replace('.', ' ').replace(',', ' ').split()
+
+            cv_summary[key] = [a for a in cv_summary[key] if not a in stop_words and  not a in string.punctuation]
+            cv_summary[key] = [ab for ab in cv_summary[key] if not ab in stop_words_k and  not ab in numbers]
+
         if 'position' in cv_summary:
             key_pos = [x for x in cv_summary["position"]  if x != "•"]
             cv_summary['position'] = key_pos
@@ -153,13 +169,16 @@ def get_vacants(fname, pages=None):
                                     if word_1 in l[counter_2]:
                                         check = False
                                         counter_2 = 0
-    
-    
-    for key in cv_summary:
-        cv_summary[key] = cv_summary[key].replace('.', '').replace(',', '').split()
+        for key in cv_summary:
+            cv_summary[key] = cv_summary[key].replace('.', ' ').replace(',', ' ').split()
 
-        cv_summary[key] = [a for a in cv_summary[key] if not a in stop_words and  not a in string.punctuation]
-        cv_summary[key] = [ab for ab in cv_summary[key] if not ab in stop_words_k and  not ab in numbers]
+            cv_summary[key] = [a for a in cv_summary[key] if not a in stop_words and  not a in string.punctuation]
+            cv_summary[key] = [ab for ab in cv_summary[key] if not ab in stop_words_k and  not ab in numbers]
+    
+    
+    print(cv_summary)
+
+    
 
     recomend = {}
 
@@ -179,11 +198,5 @@ def get_vacants(fname, pages=None):
 
     print(recomend_sorted_dict)
 
-    # vacants = {}
-
-    # for key_1 in recomend_sorted_dict:
-    #     vacants[key_1] = jobs[key_1]
-
     return recomend_sorted_dict.keys(),cv_summary
 
-    # sorted(recomend.items(), key=lambda x: x[1])
